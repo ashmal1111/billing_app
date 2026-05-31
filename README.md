@@ -1,21 +1,25 @@
-# Billing App - Professional Invoice Generator
+# Pro Invoice - Professional Billing App
 
-A complete Flutter billing solution with Razorpay integration.
+A complete Flutter application for freelancers and small businesses.
 
 ## Features
-- Invoice generation
-- PDF export
-- Payment integration
-- Dark mode
+- Create professional invoices
+- GST calculation (0 percent, 5 percent, 12 percent, 18 percent, 28 percent)
+- PDF export and sharing
+- Dark mode support
+- Razorpay payment integration
 - Client management
 - Dashboard analytics
+- CSV and JSON export
 
 ## Installation
-```bash
-git clone https://github.com/ashmal1111/billing_app.git
-cd billing_app
-flutter pub get
-flutter run
 
+1. Clone the repository
+2. Run flutter pub get
+3. Run flutter run
 
+## Author
+Ashmal P K
 
+## License
+MIT License
