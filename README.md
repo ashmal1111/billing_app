@@ -16,3 +16,6 @@ git clone https://github.com/ashmal1111/billing_app.git
 cd billing_app
 flutter pub get
 flutter run
+
+
+
