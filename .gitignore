@@ -2,7 +2,9 @@
 .dart_tool/
 .packages/
 pubspec.lock
-build/
+build/*
+!build/web/
+!build/web/**
 *.lock
 *.pid
 *.tmp
