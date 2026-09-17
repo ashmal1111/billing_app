@@ -18,6 +18,7 @@ android/.gradle
 android/captures/
 android/app/.classpath
 android/app/.project
+android/build/
 
 # iOS
 ios/Flutter/Generated.xcconfig

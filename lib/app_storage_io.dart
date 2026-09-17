@@ -11,7 +11,8 @@ class _FileStorage implements AppStorage {
   Future<File> _file(String fileName) async {
     Directory directory;
     try {
-      directory = await getApplicationDocumentsDirectory();
+      directory = await getApplicationDocumentsDirectory()
+          .timeout(const Duration(milliseconds: 100));
     } catch (_) {
       directory = Directory.systemTemp;
     }

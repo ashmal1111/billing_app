@@ -39,14 +39,14 @@ class _LoginDialogState extends State<LoginDialog> {
       _emailController.text = current.email;
       _selectedRole = current.role;
     } else {
-      _emailController.text = 'admin@company.com';
+      _emailController.text = '';
     }
   }
 
   @override
   void dispose() {
-    _emailController.dispose;
-    _passwordController.dispose;
+    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
@@ -54,12 +54,12 @@ class _LoginDialogState extends State<LoginDialog> {
     final email = _emailController.text.trim();
     final password = _passwordController.text;
 
-    if (email.isEmpty) {
-      setState(() => _errorMessage = 'Please enter an email address');
+    if (email.isEmpty || !email.contains('@') || !email.contains('.')) {
+      setState(() => _errorMessage = 'Please enter a valid email address');
       return;
     }
-    if (password.isEmpty && _auth.isConfigured) {
-      setState(() => _errorMessage = 'Please enter a password');
+    if (password.length < 6) {
+      setState(() => _errorMessage = 'Password must be at least 6 characters');
       return;
     }
 
@@ -72,13 +72,13 @@ class _LoginDialogState extends State<LoginDialog> {
       if (_isSignUp) {
         await _auth.signUp(
           email: email,
-          password: password.isEmpty ? '123456' : password,
+          password: password,
           role: _selectedRole,
         );
       } else {
         await _auth.signIn(
           email: email,
-          password: password.isEmpty ? '123456' : password,
+          password: password,
           fallbackRole: _selectedRole,
         );
       }
@@ -377,11 +377,11 @@ class _LoginDialogState extends State<LoginDialog> {
               TextField(
                 controller: _passwordController,
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Password',
-                  hintText: isConfigured ? 'Supabase password' : 'Any password',
-                  prefixIcon: const Icon(Icons.lock_outline),
-                  border: const OutlineInputBorder(),
+                  hintText: 'Enter password (min 6 characters)',
+                  prefixIcon: Icon(Icons.lock_outline),
+                  border: OutlineInputBorder(),
                   isDense: true,
                 ),
               ),

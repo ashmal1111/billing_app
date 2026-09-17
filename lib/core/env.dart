@@ -110,8 +110,8 @@ class AppEnv {
   static String defaultSupabaseAnonKey = '';
 
   // Default Business Contact
-  static const String defaultSupportPhone = '+91 7356946847';
-  static const String defaultSupportWhatsApp = '7356946847';
+  static const String defaultSupportPhone = '';
+  static const String defaultSupportWhatsApp = '';
 
   /// Validate configuration at startup or deployment gate
   static ConfigurationValidationResult validateConfiguration() {

@@ -122,7 +122,9 @@ class MultiTenantService {
   Future<void> _createDefaultSeedBusiness() async {
     final currentSession = SupabaseService.instance.currentSession;
     final userId = currentSession?.id ?? 'admin_default';
-    final userEmail = currentSession?.email ?? 'admin@billingpro.com';
+    final userEmail = (currentSession?.email.isNotEmpty ?? false)
+        ? currentSession!.email
+        : 'admin@company.com';
 
     const defaultBiz = Business(
       id: 'biz_default_001',
@@ -133,9 +135,9 @@ class MultiTenantService {
       state: 'Kerala',
       stateCode: '32',
       address: 'Suite 402, Infopark, Kochi, Kerala, India',
-      phone: '+91 7356946847',
-      whatsapp: '7356946847',
-      email: 'contact@billingpro.com',
+      phone: '',
+      whatsapp: '',
+      email: '',
       bankName: 'State Bank of India',
       accountNumber: '98765432101',
       ifsc: 'SBIN0001234',
@@ -205,8 +207,8 @@ class MultiTenantService {
     String state = 'Kerala',
     String stateCode = '32',
     String address = '',
-    String phone = '+91 7356946847',
-    String whatsapp = '7356946847',
+    String phone = '',
+    String whatsapp = '',
     String email = '',
     String bankName = '',
     String accountNumber = '',

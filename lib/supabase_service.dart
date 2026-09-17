@@ -41,7 +41,7 @@ class AppUserSession {
   factory AppUserSession.fromJson(Map<String, dynamic> json) {
     return AppUserSession(
       id: json['id'] as String? ?? 'admin_01',
-      email: json['email'] as String? ?? 'admin@billingpro.com',
+      email: json['email'] as String? ?? '',
       role: json['role'] == 'staff' ? UserRole.staff : UserRole.admin,
       isDemo: json['isDemo'] as bool? ?? false,
       loggedInAt: json['loggedInAt'] != null
@@ -93,18 +93,9 @@ class SupabaseService {
       }
 
       final sessionJson = await _storage.readText('auth_session.json');
-      if (sessionJson != null) {
+      if (sessionJson != null && sessionJson.trim().isNotEmpty) {
         final data = json.decode(sessionJson) as Map<String, dynamic>;
         _currentSession = AppUserSession.fromJson(data);
-      } else {
-        // Default to Demo Admin session so income dashboard and features
-        // are immediately usable out of the box.
-        _currentSession = AppUserSession(
-          id: 'admin_default',
-          email: 'admin@billingpro.com',
-          role: UserRole.admin,
-          isDemo: true,
-        );
       }
     } catch (e) {
       debugPrint('SupabaseService.init error: $e');

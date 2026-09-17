@@ -140,9 +140,9 @@ class _BillingHomePageState extends State<BillingHomePage> {
   double _discountPercent = 0.0;
   String _companyName = 'Your Business Name';
   String _companyAddress = '123 Business Street, City - 123456';
-  String _companyPhone = '+91 7356946847';
+  String _companyPhone = '';
   String _companyEmail = 'contact@yourbusiness.com';
-  String _companyWhatsApp = '7356946847';
+  String _companyWhatsApp = '';
 
   String _searchQuery = '';
   String _filterStatus = 'all';
@@ -751,7 +751,9 @@ class _BillingHomePageState extends State<BillingHomePage> {
       buffer.writeln('Due Date: ${invoice['dueDate']}');
     }
     buffer.writeln('Company: $_companyName');
-    buffer.writeln('WhatsApp / Helpline: +91 $_companyWhatsApp');
+    if (_companyWhatsApp.isNotEmpty) {
+      buffer.writeln('WhatsApp / Helpline: +91 $_companyWhatsApp');
+    }
     buffer.writeln('Client: ${invoice['clientName']}');
     if (invoice['clientPhone'] != null &&
         invoice['clientPhone'].toString().trim().isNotEmpty) {
@@ -783,10 +785,12 @@ class _BillingHomePageState extends State<BillingHomePage> {
     buffer.writeln(
         'Status: ${(invoice['status'] ?? "pending").toString().toUpperCase()}');
     buffer.writeln('=' * 50);
-    buffer.writeln('Download & Inquiries on WhatsApp:');
-    buffer.writeln(
-        'https://wa.me/91$_companyWhatsApp?text=Download%20Invoice%20${invoice['invoiceNumber']}');
-    buffer.writeln('=' * 50);
+    if (_companyWhatsApp.isNotEmpty) {
+      buffer.writeln('Download & Inquiries on WhatsApp:');
+      buffer.writeln(
+          'https://wa.me/91$_companyWhatsApp?text=Download%20Invoice%20${invoice['invoiceNumber']}');
+      buffer.writeln('=' * 50);
+    }
     return buffer.toString();
   }
 
@@ -854,9 +858,11 @@ class _BillingHomePageState extends State<BillingHomePage> {
         invoice['notes'].toString().trim().isNotEmpty) {
       buffer.writeln('\n💬 *Note:* ${invoice['notes']}');
     }
-    buffer.writeln('\n📥 *Download Invoice / Bill:*');
-    buffer.writeln(
-        'https://wa.me/91$_companyWhatsApp?text=Hi%2C%20I%20want%20to%20download%20invoice%20${invoice['invoiceNumber']}');
+    if (_companyWhatsApp.isNotEmpty) {
+      buffer.writeln('\n📥 *Download Invoice / Bill:*');
+      buffer.writeln(
+          'https://wa.me/91$_companyWhatsApp?text=Hi%2C%20I%20want%20to%20download%20invoice%20${invoice['invoiceNumber']}');
+    }
     buffer.writeln('\nThank you for your business! 🙏');
     return buffer.toString();
   }
@@ -874,9 +880,11 @@ class _BillingHomePageState extends State<BillingHomePage> {
     buffer.writeln(
         'Status: *${(invoice['status'] ?? 'pending').toString().toUpperCase()}*');
     buffer.writeln('\nPlease arrange payment at your earliest convenience.');
-    buffer.writeln('\nDownload & Support on WhatsApp: +91 $_companyWhatsApp');
-    buffer.writeln(
-        'https://wa.me/91$_companyWhatsApp?text=Payment%20Invoice%20${invoice['invoiceNumber']}');
+    if (_companyWhatsApp.isNotEmpty) {
+      buffer.writeln('\nDownload & Support on WhatsApp: +91 $_companyWhatsApp');
+      buffer.writeln(
+          'https://wa.me/91$_companyWhatsApp?text=Payment%20Invoice%20${invoice['invoiceNumber']}');
+    }
     buffer.writeln('\nThank you,\n*$_companyName*');
     return buffer.toString();
   }
@@ -949,66 +957,68 @@ class _BillingHomePageState extends State<BillingHomePage> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF25D366).withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(
-                    color: const Color(0xFF25D366).withValues(alpha: 0.3),
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    const Icon(Icons.verified,
-                        color: Color(0xFF25D366), size: 22),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Business WhatsApp Connected',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 12),
-                          ),
-                          Text(
-                            '+91 $_companyWhatsApp',
-                            style: const TextStyle(
-                              color: Color(0xFF075E54),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ],
-                      ),
+              if (_companyWhatsApp.isNotEmpty) ...[
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF25D366).withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: const Color(0xFF25D366).withValues(alpha: 0.3),
                     ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                'Quick Actions:',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-              ),
-              const SizedBox(height: 8),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF25D366),
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 10),
                   ),
-                  icon: const Icon(Icons.send),
-                  label: Text('Send to WhatsApp (+91 $_companyWhatsApp)'),
-                  onPressed: () {
-                    Navigator.pop(dialogContext);
-                    _launchWhatsApp(
-                        rawPhone: _companyWhatsApp, message: message);
-                  },
+                  child: Row(
+                    children: [
+                      const Icon(Icons.verified,
+                          color: Color(0xFF25D366), size: 22),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Business WhatsApp Connected',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 12),
+                            ),
+                            Text(
+                              '+91 $_companyWhatsApp',
+                              style: const TextStyle(
+                                color: Color(0xFF075E54),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+                const SizedBox(height: 16),
+                const Text(
+                  'Quick Actions:',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                ),
+                const SizedBox(height: 8),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF25D366),
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                    ),
+                    icon: const Icon(Icons.send),
+                    label: Text('Send to WhatsApp (+91 $_companyWhatsApp)'),
+                    onPressed: () {
+                      Navigator.pop(dialogContext);
+                      _launchWhatsApp(
+                          rawPhone: _companyWhatsApp, message: message);
+                    },
+                  ),
+                ),
+              ],
               if (invoice != null) ...[
                 const SizedBox(height: 8),
                 SizedBox(
@@ -2502,7 +2512,7 @@ class _BillingHomePageState extends State<BillingHomePage> {
               keyboardType: TextInputType.phone,
               decoration: const InputDecoration(
                 labelText: 'WhatsApp Number',
-                hintText: '7356946847',
+                hintText: 'e.g. 9876543210',
                 prefixText: '+91 ',
                 prefixIcon: Icon(Icons.phone),
                 border: OutlineInputBorder(),
@@ -2525,17 +2535,20 @@ class _BillingHomePageState extends State<BillingHomePage> {
               if (cleaned.isNotEmpty &&
                   (cleaned.length < 7 || cleaned.length > 15)) {
                 _showSnackBar(
-                    'Please enter a valid phone number (e.g. 7356946847)',
+                    'Please enter a valid phone number (7-15 digits)',
                     Colors.red);
                 return;
               }
               setState(() {
-                _companyWhatsApp = cleaned.isEmpty ? '7356946847' : cleaned;
-                _companyPhone = '+91 $_companyWhatsApp';
+                _companyWhatsApp = cleaned;
+                _companyPhone = cleaned.isNotEmpty ? '+91 $cleaned' : '';
               });
               _saveSettings();
               Navigator.pop(dialogContext);
-              _showSnackBar('WhatsApp number updated to +91 $_companyWhatsApp',
+              _showSnackBar(
+                  cleaned.isNotEmpty
+                      ? 'WhatsApp number updated to +91 $_companyWhatsApp'
+                      : 'WhatsApp number cleared',
                   Colors.green);
             },
             child: const Text('Save'),

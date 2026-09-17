@@ -57,7 +57,7 @@ The application currently implements an `IndexedStack` navigation bar with 7 pri
 4. **History** (`_buildSavedInvoices()`): Filterable invoice list with details dialog, status badges, download, delete.
 5. **Income Dashboard** (`AdminIncomeDashboard`): Restricted to Administrator; displays realized income, collection rates, payment breakdown, client leaderboard.
 6. **Alerts / Notifications** (`_buildNotifications()`): Activity feed of created invoices, overdue payment alerts, system events.
-7. **Settings** (`_buildSettings()`): Business profile, phone, WhatsApp helpline (`7356946847`), Supabase credentials, dark mode.
+7. **Settings** (`_buildSettings()`): Business profile, phone, WhatsApp helpline settings, Supabase credentials, dark mode.
 
 ---
 
@@ -112,7 +112,7 @@ Defined in `SupabaseService.supabaseSqlSchema`:
 * Discount handling (percentage-based).
 * Local persistence in `invoices.json` and cloud sync to Supabase.
 * Formatted document downloads.
-* WhatsApp integration with business helpline `+91 7356946847` and pre-filled customer download links.
+* WhatsApp integration with configured business helpline and pre-filled customer download links.
 
 ---
 
