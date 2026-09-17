@@ -41,6 +41,9 @@ GoogleService-Info.plist
 # Environment
 .env
 .env.local
+auth_session.json
+settings.json
+*_state.json
 
 # Web
 web/

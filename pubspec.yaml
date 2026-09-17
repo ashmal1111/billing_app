@@ -13,6 +13,8 @@ dependencies:
   printing: ^5.11.1
   intl: ^0.18.1
   pdf: ^3.10.4
+  url_launcher: ^6.3.2
+  supabase_flutter: ^2.8.0
 
 dev_dependencies:
   flutter_test:
